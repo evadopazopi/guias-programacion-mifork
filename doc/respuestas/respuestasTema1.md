@@ -156,7 +156,9 @@ Existe una variante llamada **POO basada en prototipos**. El ejemplo más famoso
 
 ## 6. ¿Dónde se almacenan en memoria los objetos? ¿Es igual en todos los lenguajes? ¿Qué es la **recolección de basura**? 
 
-En la mayoría de los lenguajes, los objetos se almacenan en una región de la memoria llamada **Heap** (montículo). A diferencia del **Stack** (pila), donde se guardan las variables locales y funciones con un tamaño fijo y tiempo de vida predecible, el Heap es un área mucho más grande y dinámica. Al crear un objeto, el sistema busca un bloque libre en el Heap, guarda allí los datos y devuelve una **referencia** (un puntero gestionado) que se almacena en el Stack para poder acceder a él.
+En la mayoría de los lenguajes, los objetos se almacenan en una región de la memoria llamada **Heap** (montículo). A diferencia del **Stack** (pila), donde se guardan las variables locales y funciones con un tamaño fijo y tiempo de vida predecible, el Heap es un área mucho más grande y dinámica (el tamaño se decide en tiempo de ejecución).Lo que está en el heap vive más allá que le método o función donde se ha creado. Al crear un objeto, el sistema busca un bloque libre en el Heap, guarda allí los datos y devuelve una **referencia** (un puntero gestionado) que se almacena en el Stack para poder acceder a él.
+
+Desventajas: hay que liverarla cuando ya no se necesita. Se haría de forma manual (más dificil) o de forma automática (por ejemplo, con el recolector de basura).
 
 ### ¿Es igual en todos los lenguajes?
 
@@ -167,6 +169,8 @@ No exactamente. En lenguajes como **Java** o **C#**, prácticamente todos los ob
 La recolección de basura es un proceso automático encargado de gestionar la memoria del Heap. Su función es identificar qué objetos ya no están siendo utilizados por el programa (porque no hay ninguna referencia apuntando a ellos) y liberar ese espacio de forma automática.
 
 En lenguajes como **C**, el programador debe liberar la memoria manualmente (usando `free()`), lo que suele causar errores si se olvida hacerlo. En lenguajes con **Garbage Collector** (como Java o Python), el programador se despreocupa de la destrucción de los objetos, ya que el sistema operativo "limpia" periódicamente los datos que han quedado huérfanos.
+
+Desventaja: problema de rendimiento, hay veces que pasa y no hay basura.
 
 
 ## 7. ¿Qué es un método? ¿Qué es la **sobrecarga de métodos**? 
@@ -245,10 +249,13 @@ El punto de entrada es el método `public static void main(String[] args)`. Al i
 
 ### ¿Qué es `static` y para qué vale?
 
-El modificador `static` indica que un miembro (método o atributo) pertenece a la **clase en sí** y no a una instancia (objeto) concreta.
+El modificador `static` indica que un miembro (método o atributo) pertenece a la **clase en sí** y NO a una instancia (objeto) concreta.
 
 * En el caso del `main`, es `static` porque la JVM necesita poder llamarlo antes de que se haya creado cualquier objeto en la memoria.
 * Un método estático puede ejecutarse sin necesidad de usar el operador `new`. Para un programador de C, un método `static` es lo más parecido a una **función global** tradicional, ya que no depende del estado de ningún objeto para funcionar.
+Dentro del método static no puedo usar nada que no sea static, es decir no puedo usar this por ejemplo.
+Integer.parseInt es un método static por ejemplo. O también Math.sqrt. No necesito un new math o un new integer.
+No se debe abusar del static.
 
 ### ¿Sólo se emplea para el método `main`?
 
