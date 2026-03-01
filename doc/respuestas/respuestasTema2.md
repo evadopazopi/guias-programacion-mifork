@@ -20,7 +20,7 @@ Las ventajas de la ocultación de información incluyen:
 
 ## 2. La interfaz pública y su relación con la ocultación
 
-La **interfaz pública** de un objeto o clase se define como el conjunto de métodos y constantes que son accesibles desde el exterior. Representa el "contrato" o punto de contacto que la clase ofrece a otros componentes para interactuar con ella. En Java, esta interfaz se compone principalmente de los métodos marcados con el modificador `public`, los cuales dictan qué acciones puede realizar el objeto sin revelar su funcionamiento interno.
+La **interfaz pública** de un objeto o clase se define como el conjunto de métodos y constantes que son accesibles desde el exterior. Interfaz pública -->Todo lo que no es absolutamente privado. Representa el "contrato" o punto de contacto que la clase ofrece a otros componentes para interactuar con ella. En Java, esta interfaz se compone principalmente de los métodos marcados con el modificador `public`, los cuales dictan qué acciones puede realizar el objeto sin revelar su funcionamiento interno.
 
 La relación con la ocultación de información es de complementariedad: mientras la ocultación mantiene los datos sensibles y la lógica compleja en privado (`private`), la interfaz pública expone solo lo estrictamente necesario para que el objeto sea funcional. Se puede visualizar como la fachada de un módulo que oculta los engranajes internos, permitiendo una comunicación segura y simplificada entre las distintas partes del software.
 
@@ -55,7 +55,7 @@ Por el contrario, la implementación interna (el código privado) es fácil de c
 
 ## 4. ¿Qué son las **invariantes de clase** y por qué la ocultación de información nos ayuda?
 
-Las **invariantes de clase** son condiciones o reglas lógicas que deben cumplirse siempre para que un objeto se considere en un estado válido. Se pueden comparar con las restricciones de integridad en una base de datos o las reglas de validación en C; por ejemplo, en una clase que represente una `Fecha`, una invariante sería que el valor del mes siempre esté en el rango de 1 a 12. Estas reglas se establecen durante la construcción del objeto y deben preservarse tras la ejecución de cualquier método público.
+Las **invariantes de clase** son condiciones o reglas lógicas que deben cumplirse durante toda la vida del objeto para que se considere en un estado válido. Por ejemplo:Persona debe tener edad mayor o igual que cero. Se pueden comparar con las restricciones de integridad en una base de datos o las reglas de validación en C; por ejemplo, en una clase que represente una `Fecha`, una invariante sería que el valor del mes siempre esté en el rango de 1 a 12. Estas reglas se establecen durante la construcción del objeto y deben preservarse tras la ejecución de cualquier método público.
 
 La ocultación de información es la herramienta fundamental para proteger estas invariantes. Si los atributos fueran públicos (como ocurre por defecto en las `struct` de C), cualquier parte del código podría asignar valores que rompan la lógica del objeto, como establecer un radio negativo en una clase `Circulo`. Al declarar los atributos como `private`, se garantiza que la única forma de alterar el estado sea a través de métodos controlados que validen los datos antes de realizar cualquier cambio.
 
@@ -100,6 +100,9 @@ El modificador **`private`** actúa como un muro de privacidad: indica que el mi
 Esta separación permite que el objeto mantenga su autonomía. Si en el futuro se necesitara añadir una validación (por ejemplo, que las coordenadas no puedan ser infinitas), se podría hacer dentro del constructor o de los métodos de asignación sin que el resto del código que ya usa la clase `Punto` se entere del cambio lógico.
 
 ## 6. En Java, ¿A quiénes se pueden aplicar los modificadores `public` o `private`?
+
+Public --> Clases,atributos y métodos.
+Private --> Clases internas (no las estamos viendo), atributos y métodos.
 
 Los modificadores de acceso en Java tienen un alcance versátil, pero su aplicación varía según el nivel del código en el que se encuentren. Principalmente, se aplican a los **miembros de la clase** (atributos y métodos) y a las **clases mismas**, aunque con ciertas restricciones importantes que aseguran la coherencia del sistema.
 
