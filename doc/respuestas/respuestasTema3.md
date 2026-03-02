@@ -41,7 +41,7 @@ int main() {
     float num = -5.0;
     float res = raiz(num);
     
-    if (res < 0) {
+    if (res == -1.0) {
         printf("Error: No se puede calcular la raiz de un numero negativo.\n");
     } else {
         printf("Resultado: %f\n", res);
@@ -64,24 +64,24 @@ Si la función devuelve `0`, se asume éxito; si devuelve un código distinto de
 #include <math.h>
 
 // Devuelve 0 si es correcto, 1 si hay error
-int raiz_segura(float n, float *resultado) {
+int raiz_segura(float n, float *error) {
     if (n < 0) {
-        return 1; // Código de error
+        *error=1 // Código de error
+        return 0;
     }
-    *resultado = sqrt(n);
-    return 0; // Éxito
+    *error=0;
+    return sqrt(num);
 }
 
 int main() {
+    int error=0;
     float num = -9.0;
-    float res;
-    
-    if (raiz_segura(num, &res) != 0) {
-        printf("Error detectado: Entrada negativa no permitida.\n");
-    } else {
-        printf("La raiz es: %f\n", res);
+    floar resultado=raiz(num,&error);
+    if (error!=0){
+        printf("Error: No se puede calcular la raiz de un numero negativo.\n");
+    }else{
+        printf("Resultado: %f\n", res);
     }
-    return 0;
 }
 
 ```
@@ -89,7 +89,7 @@ int main() {
 
 ## 2. Brevemente ¿Qué es una **"excepción"**? ¿Con qué objetivo las usa un programador cuando implementa funciones o cuando las llama?
 
-Una **excepción** es un objeto que representa un error o evento inesperado durante la ejecución. A diferencia de C, donde el error es un simple número (como `-1`), aquí es una estructura con información detallada sobre qué falló y en qué línea de código ocurrió.
+Una **excepción** es un objeto que representa un error o evento inesperado durante la ejecución.Surge en situaciones atípicas basicamente. A diferencia de C, donde el error es un simple número (como `-1`), aquí es una estructura con información detallada sobre qué falló y en qué línea de código ocurrió.
 
 Al **implementar una función**, el programador las usa para delegar la responsabilidad. En lugar de decidir si imprimir un mensaje o abortar, la función lanza la excepción y deja que quien la invocó decida cómo reaccionar. Esto mantiene la lógica del cálculo separada de la gestión de errores.
 
@@ -106,7 +106,7 @@ Al llamar al método desde el `main`, el código se encierra en un bloque `try`.
 ```java
 public class Calculadora {
 
-    public double raiz(double n) {
+    public static double raiz(double n) {
         if (n < 0) {
             // Se lanza la excepción para que el llamador la gestione
             throw new IllegalArgumentException("No se puede calcular la raíz de un número negativo.");
