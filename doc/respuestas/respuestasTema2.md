@@ -330,7 +330,7 @@ En la práctica moderna, se prefiere tender hacia la **inmutabilidad** o hacia i
 
 ## 19. ¿La clase `String` en Java es mutable o inmutable? ¿Qué ocurre al concatenar dos cadenas? ¿Qué debemos hacer si vamos a hacer una operación que implique concatenar muchas veces para construir paso a paso una cadena muy larga?
 
-La clase `String` en Java es estrictamente **inmutable**. Esto significa que una vez que se crea un objeto de tipo cadena, su contenido no puede ser modificado bajo ninguna circunstancia. Esta decisión de diseño permite que Java optimice el uso de memoria a través de un "pool" de cadenas, donde varias variables pueden apuntar a la misma instancia de texto de forma segura, ya que existe la garantía de que nadie la alterará.
+La clase `String` en Java es estrictamente **inmutable**. Esto significa que una vez que se crea un objeto de tipo cadena, su contenido no puede ser modificado bajo ninguna circunstancia, no voy a ecnontrar ningún método que me permita modificarlo. Esta decisión de diseño permite que Java optimice el uso de memoria a través de un "pool" de cadenas, donde varias variables pueden apuntar a la misma instancia de texto de forma segura, ya que existe la garantía de que nadie la alterará.
 
 Cuando se concatenan dos cadenas, por ejemplo mediante el operador `+`, no se modifica ninguna de las cadenas originales. En su lugar, el entorno de ejecución de Java reserva un nuevo espacio de memoria lo suficientemente grande para albergar el resultado combinado, copia ambos textos y devuelve una **nueva instancia** de `String`. Si se realiza esta operación dentro de un bucle, se generan miles de objetos intermedios que quedan huérfanos en la memoria casi instantáneamente, obligando al recolector de basura (*Garbage Collector*) a trabajar intensamente, lo que degrada drásticamente el rendimiento del programa.
 
@@ -351,8 +351,8 @@ Para el caso específico de las **cadenas de texto (`String`)**, nunca se deben 
 String s1 = new String("hola");
 String s2 = new String("hola");
 
-if (s1 == s2) { /* FALSO: son objetos distintos en memoria */ }
-if (s1.equals(s2)) { /* VERDADERO: el contenido es el mismo */ }
+if (s1 == s2) { /* FALSO: son objetos distintos en memoria */ } //Comparando por identidad
+if (s1.equals(s2)) { /* VERDADERO: el contenido es el mismo */ }//Comparando por contenido
 
 ```
 
@@ -372,9 +372,11 @@ No todos los lenguajes orientados a objetos gestionan esta distinción de la mis
 
 ## 22. ¿En POO qué es un **tipo de dato enumerado**? ¿En Java, un tipo de dato enumerado es una clase? ¿Qué ventajas tienen en términos de encapsulación los enumerados en Java?
 
-Un **tipo de dato enumerado** (`enum`) es un tipo especial de dato que permite definir un conjunto fijo de constantes con nombre. Se utiliza para representar categorías que no cambian, como los días de la semana, los meses del año, los estados de un pedido (PENDIENTE, ENVIADO, ENTREGADO) o los puntos cardinales. Su objetivo es sustituir el uso de números mágicos (como `1` para "Lunes") o cadenas de texto sueltas, que son propensas a errores tipográficos.
+Un **tipo de dato enumerado** (`enum`) es un tipo especial de dato que permite definir un conjunto fijo de constantes con nombre. Es un tipo con un número determinado de variables posibles.. Se utiliza para representar categorías que no cambian, como los días de la semana, los meses del año, los estados de un pedido (PENDIENTE, ENVIADO, ENTREGADO) o los puntos cardinales. Su objetivo es sustituir el uso de números mágicos (como `1` para "Lunes") o cadenas de texto sueltas, que son propensas a errores tipográficos.
 
 En Java, un enumerado **es una clase**. Esta es una de las diferencias más potentes respecto a lenguajes como C. Al ser una clase, un `enum` puede tener atributos, métodos e incluso constructores. La única restricción es que el conjunto de instancias es predefinido y no se pueden crear nuevos objetos del `enum` en tiempo de ejecución mediante `new`.
+Definición del profe:
+En Java, un enumerado es una clase, cuyas instancias son finitas, conocidas de antemano, y tienen un nombre cada una (valor del enumerado, el que aparece en mayúsculas).
 
 En términos de **encapsulación**, los enumerados en Java ofrecen ventajas excepcionales:
 
