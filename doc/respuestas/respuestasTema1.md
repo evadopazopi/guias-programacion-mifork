@@ -1,24 +1,9 @@
-En esta carpeta debes copiar los ficheros de enunciados y editarlos aquí. De esta forma, siempre tendrás los originales intactos.
-<!--
-Posible prompt:
-<prompt>
-Tengo un cuestionario con preguntas sobre "Clases y Objetos". Debes tener en cuenta que los conocimientos previos que tengo (y por tanto tus respuestas deben ser adaptadas), son:
-- C/C++ sin orientación a objetos.
-- Temas de Java previos: ninguno.
-
-Cada respuesta debe tener entre 2 - 4 párrafos de longitud (sin contar los trozos de código).
-
-Por favor, escribe en impersonal las respuestas.
-
-</prompt>
-----
--->
 
 # TEMA 1. Clases y objetos
 
 ## 1. ¿Cuáles son las cuatro características básicas de la programación orientada a objetos? Describe brevemente cada una
 
----
+
 
 ## 1. Abstracción
 
@@ -26,7 +11,6 @@ La abstracción consiste en identificar las características y comportamientos e
 
 En términos de implementación, se logra mediante la creación de clases que definen interfaces claras. Para un programador de C, la abstracción es similar a definir un archivo de cabecera (`.h`) donde se exponen solo las funciones necesarias para usar un módulo, ocultando la complejidad del código interno que el usuario no necesita conocer para que el sistema funcione.
 
----
 
 ## 2. Encapsulamiento
 
@@ -34,7 +18,6 @@ El encapsulamiento es el mecanismo que agrupa datos (atributos) y los métodos q
 
 Para lograr esto en Java, se utilizan modificadores de acceso (como `private`). En lugar de acceder a una variable directamente como se haría en un `struct` de C, se emplean métodos intermedios (llamados *getters* y *setters*). Esto permite que el objeto tenga control total sobre sus propios datos, pudiendo validar una información antes de permitir que se guarde.
 
----
 
 ## 3. Herencia
 
@@ -42,7 +25,6 @@ La herencia es la capacidad de crear nuevas clases a partir de clases ya existen
 
 A diferencia de C, donde para crear una estructura similar a otra se suele recurrir a copiar código o usar punteros complejos, en Java la herencia permite extender funcionalidades de forma natural. Por ejemplo, una clase `Vehiculo` puede heredar sus propiedades básicas a una clase `Coche` y a una clase `Moto`, evitando tener que definir la matrícula o el motor por duplicado en cada una.
 
----
 
 ## 4. Polimorfismo
 
@@ -50,7 +32,6 @@ El polimorfismo es la característica que permite que un mismo nombre (ya sea un
 
 Para un programador de C, esto sería comparable a tener un puntero genérico que sabe exactamente a qué función llamar sin necesidad de usar largas estructuras de `switch` o `if/else` para comprobar el tipo de dato. Si se tiene una lista de `Vehiculos` y se les ordena `arrancar()`, el polimorfismo garantiza que el coche use su motor de combustión y la bicicleta simplemente se ponga en marcha, todo bajo la misma instrucción.
 
----
 
 
 ## 2. Cita cuatro lenguajes populares que permitan la programación orientada a objetos
@@ -79,7 +60,6 @@ Creado por Microsoft, es el lenguaje principal para el desarrollo en Windows y e
 
 Al igual que Java, gestiona la memoria de forma automática. Es muy popular en el ámbito empresarial debido a su robustez y a la gran cantidad de herramientas que ofrece para crear aplicaciones de escritorio, web y móviles de forma organizada mediante objetos.
 
----
 
 ## 3. Los paradigmas anteriores a la POO, ¿Qué es la **programación estructurada**? y, todavía mejor, ¿Qué es la **programación modular**?
 
@@ -98,7 +78,7 @@ La programación modular es el siguiente paso evolutivo, donde el programa se di
 
 Para un programador de C, la modularidad es lo que aplicas cuando usas archivos `.h` y `.c` separados. Esto facilita mucho la depuración y permite que varios programadores trabajen en partes distintas del código sin estorbarse. Sin embargo, sigue teniendo un límite: aunque las funciones están separadas, los **datos** suelen seguir estando "sueltos" o globales, lo que puede provocar errores si una función modifica algo que no debería.
 
----
+
 
 ### Comparativa rápida con la POO
 
@@ -125,7 +105,7 @@ La identidad es lo que permite distinguir a un objeto de otro, incluso si tienen
 
 Cada objeto tiene una dirección única en la memoria (una referencia). Gracias a la identidad, el programa sabe que al llamar a `miCoche.acelerar()`, solo debe subir la velocidad de ese coche específico y no la de todos los coches del sistema.
 
----
+
 
 ## 5. ¿Qué es una clase? ¿Es lo mismo que un objeto? ¿Qué es una instancia? ¿Todos los lenguajes orientados a objetos manejan el concepto de clase?
 
@@ -152,7 +132,6 @@ Aunque la inmensa mayoría de los lenguajes populares (Java, C++, C#, Python) so
 
 Existe una variante llamada **POO basada en prototipos**. El ejemplo más famoso es **JavaScript** (en sus versiones originales). En estos lenguajes, no existe un "plano" o clase; los objetos se crean clonando otros objetos ya existentes (prototipos) y añadiéndoles nuevas características sobre la marcha. Es un enfoque distinto, pero sigue siendo orientación a objetos.
 
----
 
 ## 6. ¿Dónde se almacenan en memoria los objetos? ¿Es igual en todos los lenguajes? ¿Qué es la **recolección de basura**? 
 
@@ -233,7 +212,7 @@ public class Principal {
 
 ```
 
----
+
 
 ### Notas para tu perfil (C/C++)
 
@@ -273,7 +252,7 @@ La combinación `static final` se utiliza para definir **constantes** en Java.
 
 Es una práctica estándar para valores globales inmutables, como `static final double PI = 3.14159;`.
 
----
+
 ## 10. Intenta ejecutar un poco de Java de forma básica, con los comandos `javac` y `java`. ¿Cómo podemos compilar el programa y ejecutarlo desde linea de comandos? ¿Java es compilado? ¿Qué es la **máquina virtual**? ¿Qué es el *byte-code* y los ficheros `.class`?
 
 ### ¿Cómo compilar y ejecutar desde la línea de comandos?
@@ -299,7 +278,6 @@ La **JVM (Java Virtual Machine)** es el programa que actúa como un "traductor" 
 
 Para un programador de C, es como si tuvieras un intérprete que lee tu código a medida que corre para asegurar que sea seguro y eficiente. Es gracias a la JVM que Java puede ofrecer servicios automáticos como el **Garbage Collector** que vimos antes, ya que ella es la que realmente gestiona la memoria mientras el programa se ejecuta.
 
----
 ## 11. En el código anterior de la clase `Punto` ¿Qué es `new`? ¿Qué es un **constructor**? Pon un ejemplo de constructor en una clase `Empleado` que tenga DNI, nombre y apellidos
 
 ### ¿Qué es `new`?
@@ -381,7 +359,7 @@ public class Punto {
 
 ```
 
----
+
 
 ## 13. Añade ahora otro nuevo método que se llame `distanciaA`, que reciba un `Punto` como parámetro y calcule la distancia entre `this` y el punto proporcionado
 
@@ -436,7 +414,7 @@ public class Principal {
 
 Esta es una de las preguntas más críticas para alguien que viene de **C**, ya que la gestión de punteros en Java es automática pero sigue reglas muy estrictas que pueden confundir al principio.
 
----
+
 
 ## 14. Paso por valor vs. Paso por referencia
 
@@ -459,7 +437,7 @@ En este caso, Java crea una copia exacta del dato en una nueva posición de memo
 | **Objeto** (`Punto`, `String`) | Referencia | **Sí** | `void func(Struct *p)` |
 | **Primitivo** (`int`, `float`) | Valor (Copia) | **No** | `void func(int n)` |
 
----
+
 
 ## 15. ¿Qué es el método `toString()` en Java? ¿Existe en otros lenguajes? Pon un ejemplo de `toString()` en la clase `Punto` en Java
 
@@ -508,7 +486,7 @@ System.out.println(p);
 
 ```
 
----
+
 
 ## 16. Reflexiona: ¿una clase es como un `struct` en C? ¿Qué le falta al `struct` para ser como una clase y las variables de ese tipo ser instancias?
 
@@ -536,13 +514,12 @@ La variable se convierte en una **instancia** realmente cuando usas la palabra c
 * Se ejecuta el **Constructor** (que no existe en los structs de C).
 * El objeto adquiere su propia **Identidad** única en el sistema.
 
----
 
 ## 17. Quitemos un poco de magia a todo esto: ¿Como se podría “emular”, con `struct` en C, la clase `Punto`, con su función para calcular la distancia al origen? ¿Qué ha pasado con `this`?
 
 Esta es la pregunta definitiva para "romper" la magia de Java y entender que, en el fondo, el ordenador sigue funcionando de forma similar. Para emular la POO en C, tenemos que hacer manualmente lo que Java hace automáticamente por nosotros.
 
----
+
 
 ## 17. Emulando una Clase en C
 
@@ -600,4 +577,4 @@ Fíjate en la llamada: `miPunto.calculaDistanciaAOrigen(&miPunto)`. Para que la 
 
 Lo que Java llama "Objeto" es, en esencia, una estructura de datos que lleva consigo un puntero a una tabla de funciones. La "magia" de la POO consiste en que el lenguaje se encarga de gestionar esos punteros y de pasar el valor de `this` automáticamente cada vez que llamas a un método, evitando que tú cometas errores al gestionar las direcciones de memoria.
 
----
+
