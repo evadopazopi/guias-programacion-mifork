@@ -333,6 +333,10 @@ En cuanto al método para obtener todos los profesores, devolver directamente la
 
 Para resolver este problema de seguridad, se debe aplicar una técnica de **protección de la información**. La solución estándar en Java consiste en devolver una **vista inmutable** de la lista (utilizando `Collections.unmodifiableList(nomina)`) o realizar una **copia defensiva** (devolviendo `new ArrayList<>(nomina)`). De este modo, el usuario externo puede consultar los datos, pero cualquier intento de modificar la estructura de la lista resultará en un error o no afectará a la lista privada que el departamento custodia internamente.
 
+13/04/2026
+Falta por ver:
+-Composciones reflexivas o recursivas.
+-Composiciones bidireccionales
 
 ## 10. Al igual que ocurre con las excepciones en Java, que pueden encerrar causas (que son excepciones), de forma recursiva, suponen un tipo especial de composiciones, denominadas composiciones recursivas. Pon un ejemplo en Java de una `Persona`, que sea inmutable, y que tiene una madre, que es otra `Persona`. Haz un main con un ejemplo de uso con una familia de personas, desde el nieto hasta la abuela. Enumera algún otro ejemplo clásico de composiciones recursivas.
 
@@ -343,29 +347,14 @@ Al aplicar este concepto a una clase `Persona` inmutable, se asegura que el vín
 A continuación se muestra la implementación y un ejemplo de uso:
 
 ```java
-public class Persona {
-    private final String nombre;
-    private final Persona madre; // Composición recursiva
+public class Persona{
+    private Persona madre;
 
-    // Constructor para la "Eva" de la genealogía (madre desconocida)
-    public Persona(String nombre) {
-        this.nombre = nombre;
+    public Persona (Persona madre){
+        this.madre=madre;
+    }
+    public Persona (){
         this.madre = null;
-    }
-
-    // Constructor estándar
-    public Persona(String nombre, Persona madre) {
-        if (nombre == null) throw new IllegalArgumentException("El nombre es obligatorio.");
-        this.nombre = nombre;
-        this.madre = madre;
-    }
-
-    public String getNombre() { return nombre; }
-    public Persona getMadre() { return madre; }
-
-    @Override
-    public String toString() {
-        return nombre + (madre != null ? " (hijo/a de " + madre.getNombre() + ")" : " (raíz familiar)");
     }
 }
 
@@ -397,7 +386,7 @@ Además del ejemplo genealógico y las excepciones, existen otros casos clásico
 
 En una relación de **composición bidireccional**, ambos objetos involucrados mantienen una referencia mutua el uno del otro. Mientras que en una relación unidireccional solo el `Departamento` conoce a su lista de `Profesor`, en la bidireccional cada `Profesor` guarda también una referencia al `Departamento` al que pertenece. Esto permite "navegar" el modelo en ambos sentidos: desde el departamento se puede saber quiénes son sus docentes, y desde un objeto docente se puede consultar directamente a qué departamento está adscrito sin necesidad de realizar búsquedas externas.
 
-Implementar este tipo de relación introduce una complejidad añadida: la **gestión de la consistencia**. El principal reto es asegurar que ambas referencias estén siempre sincronizadas. Si un profesor es añadido a la lista de un departamento, el atributo `departamento` de ese profesor debe actualizarse simultáneamente para apuntar a dicho contenedor. Si esta sincronización falla, se producirían inconsistencias graves donde un profesor cree pertenecer a un departamento que no lo tiene en su nómina (un estado de "punteros colgados" lógico).
+Implementar este tipo de relación introduce una complejidad añadida: la **gestión de la consistencia**. Exigen programar cuidadosamente para mantener la consistencia. Si añado un profesor al departamento, debo actualizar la referencia al Departamento desde Profesor. Si esta sincronización falla, se producirían inconsistencias graves donde un profesor cree pertenecer a un departamento que no lo tiene en su nómina (un estado de "punteros colgados" lógico).
 
 Para implementarlo en Java, se deben realizar los siguientes cambios estructurales:
 
