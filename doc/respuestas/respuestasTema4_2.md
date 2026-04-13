@@ -14,12 +14,21 @@ Por favor, escribe en impersonal las respuestas.
 -->
 ## 1. En orientación a objetos, ¿qué es la **herencia** y su relación con "A es-un B"?. Explica las dos implicaciones principales: (1) **compatibilidad de tipos** y (2) **herencia de estado y comportamiento**. Pon un ejemplo en Java muy sencillo, donde un `Soldado` tiene un `nombre` (privado) y un método `saludar()` que muestra su nombre. Hay dos subtipos: un `Artillero`, que es capaz de disparar cohetes y un `Zapador` que pone minas, ambos heredan el atributo nombre y la capacidad de saludar. Además, y de forma específica, el artillero tiene un número de cohetes y el zapador un número de minas, accesibles mediante "getters" específicos. Respecto a la compatibilidad de tipos, aprovechémosla: crea un array de `Soldado`, mete varios de distinto tipo (son todos compatibles con `Soldado`). Recórrela y que todos te saluden.
 
+La composición hace relación a --> "tiene un // tiene varios"
+La herencia hace relación a --> "es un"
+
+        Soldado
+Artillero       Zapador
+
+Un artillero es un solado y un zapador también
+
 La **herencia** es un mecanismo fundamental de la programación orientada a objetos que permite definir una nueva clase a partir de una ya existente. Se establece así una relación jerárquica donde la clase derivada (subclase) se considera una especialización de la clase base (superclase), lo que se traduce en la frase lógica **"A es-un B"**. A diferencia de la composición, donde un objeto "tiene" a otro, aquí el objeto hijo comparte la naturaleza esencial del padre, adquiriendo automáticamente sus capacidades y estructura.
 
-La primera implicación crítica es la **herencia de estado y comportamiento**. Esto significa que los atributos (estado) y los métodos (comportamiento) definidos en la superclase están presentes en las subclases sin necesidad de volver a programarlos. Aunque los atributos sean privados en el padre para mantener la encapsulación, el hijo los posee internamente, lo que reduce drásticamente la duplicación de código y facilita el mantenimiento, ya que cualquier cambio en la lógica general del padre se propaga automáticamente a todos sus descendientes.
+La primera implicación es la **compatibilidad de tipos** (o polimorfismo de subtipo). En Java, un objeto de una subclase puede ser tratado legalmente como si fuera del tipo de su superclase.  Esto permite crear estructuras de datos genéricas, como arrays de la clase base, que pueden almacenar cualquier objeto derivado. Esta flexibilidad es vital para escribir código extensible: se puede programar una función que reciba un tipo general y esta funcionará correctamente con cualquier variante específica que se cree en el futuro. Por ejemplo:
 
-La segunda implicación es la **compatibilidad de tipos** (o polimorfismo de subtipo). En Java, un objeto de una subclase puede ser tratado legalmente como si fuera del tipo de su superclase. Esto permite crear estructuras de datos genéricas, como arrays de la clase base, que pueden almacenar cualquier objeto derivado. Esta flexibilidad es vital para escribir código extensible: se puede programar una función que reciba un tipo general y esta funcionará correctamente con cualquier variante específica que se cree en el futuro.
+Soldado s = new Artillero ("Pepe");
 
+La segunda implicación crítica es la **herencia de estado y comportamiento**. Esto significa que los atributos (estado) y los métodos (comportamiento) definidos en la superclase están presentes en las subclases sin necesidad de volver a programarlos. Aunque los atributos sean privados en el padre para mantener la encapsulación, el hijo los posee internamente, lo que reduce drásticamente la duplicación de código y facilita el mantenimiento, ya que cualquier cambio en la lógica general del padre se propaga automáticamente a todos sus descendientes.
 
 
 A continuación se muestra la implementación del ejemplo solicitado:
@@ -38,12 +47,12 @@ class Soldado {
     }
 }
 
-// Subclases
+// Subclases con EXTENDS!!!
 class Artillero extends Soldado {
     private int cohetes;
-
-    public Artillero(String nombre, int cohetes) {
-        super(nombre); // Llama al constructor del padre
+    
+    public Artillero(String nombre,int cohetes) {
+        super(nombre);
         this.cohetes = cohetes;
     }
 
@@ -53,8 +62,8 @@ class Artillero extends Soldado {
 class Zapador extends Soldado {
     private int minas;
 
-    public Zapador(String nombre, int minas) {
-        super(nombre);
+    public Zapador(String nombre,int minas) {
+        super (nombre);
         this.minas = minas;
     }
 
@@ -88,13 +97,22 @@ Al instanciar un objeto de una clase derivada, se produce una ejecución en cade
 
 La palabra clave **`super`** dentro de un constructor actúa como una llamada explícita al constructor de la clase base. Su función es delegar la inicialización de los atributos heredados al responsable original de los mismos. En Java, esta llamada debe ser siempre la **primera instrucción** del constructor de la subclase. Si no se escribe manualmente, el compilador intenta insertar de forma invisible una llamada a `super()`, pero esto solo funciona si la clase base dispone de un constructor sin parámetros.
 
-
-
 Si la clase base carece de un constructor sin parámetros (como ocurre en `Soldado`, donde el constructor requiere obligatoriamente un `nombre`), es **obligatorio** llamar a `super` de forma explícita en todas las subclases. El compilador de Java lanzará un error si no se hace, ya que no sabría cómo inicializar la parte de "padre" del objeto. Esta restricción garantiza la integridad del sistema: un `Artillero` no puede existir si no se define primero su identidad básica como `Soldado`.
 
-
-
 En resumen, la presencia de `super` asegura que la encapsulación no se rompa. Aunque el atributo `nombre` sea privado en `Soldado` y el `Artillero` no pueda acceder a él directamente, el uso de `super(nombre)` permite que el objeto hijo se configure correctamente a través de la interfaz que su padre ha definido. Este mecanismo refuerza la estructura jerárquica y evita que las subclases tengan que conocer los detalles internos de implementación de sus ancestros.
+ En el ejercicio anterior ya se puede ver hecho:
+
+class Artillero extends Soldado {
+    private int cohetes;
+
+    public Artillero(String nombre, int cohetes) {
+        super(nombre); // Llama al constructor del padre
+        this.cohetes = cohetes;
+    }
+
+    public int getCohetes() { return cohetes; }
+}
+
 
 ## 3. Respecto a los objetos de subclases en memoria, los atributos privados de la superclase, ¿forman parte de una instancia de la subclase en memoria? En caso afirmativo ¿implica que se puedan usar desde el código de la subclase? Explícalo con el ejemplo de `Soldado` y alguna de sus subclases.
 
