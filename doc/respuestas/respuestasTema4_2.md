@@ -270,7 +270,7 @@ A pesar de su utilidad, el uso de atributos `protected` debe hacerse con cautela
 
 En la mayoría de los lenguajes orientados a objetos modernos, existe el concepto de una **clase raíz** de la cual derivan todas las demás de forma directa o indirecta. Esta arquitectura crea un árbol jerárquico unificado donde cualquier instancia, sin importar su propósito, comparte un conjunto mínimo de capacidades. Sin embargo, esto **no ocurre en todos los lenguajes**. En C++, por ejemplo, no existe una clase base común; se pueden crear múltiples jerarquías independientes (bosques de árboles), lo que otorga máxima eficiencia pero complica la creación de colecciones que puedan almacenar "cualquier cosa".
 
-En **Java**, por el contrario, existe una clase base universal denominada **`Object`**. Pertenece al paquete `java.lang` y es la cúspide de toda la jerarquía. Si al definir una clase no se utiliza la palabra clave `extends`, el compilador de Java inserta automáticamente `extends Object`. Esto garantiza que cada objeto en el ecosistema Java, desde un simple `String` hasta nuestro complejo `Soldado`, herede métodos fundamentales como `toString()` (para representación textual), `equals()` (para comparación lógica) o `hashCode()`.
+En **Java**, por el contrario, existe una clase base universal denominada **`Object`**.Aunque no lo pongamos, todas las clases heredan de object (tiene un constructor sin parámetros). Pertenece al paquete `java.lang` y es la cúspide de toda la jerarquía. Si al definir una clase no se utiliza la palabra clave `extends`, el compilador de Java inserta automáticamente `extends Object`. Esto garantiza que cada objeto en el ecosistema Java, desde un simple `String` hasta nuestro complejo `Soldado`, herede métodos fundamentales como `toString()` (para representación textual), `equals()` (para comparación lógica) o `hashCode()`.
 
 
 
@@ -283,13 +283,12 @@ Finalmente, esta herencia universal facilita el **polimorfismo extremo**. Se pue
 
 ## 8. ¿Qué es la **"herencia múltiple"**? ¿Existe en Java herencia múltiple?
 
-La **herencia múltiple** es una característica de algunos lenguajes de programación (como C++ o Python) que permite que una clase derivada herede atributos y comportamientos de **más de una clase base** simultáneamente. En el mundo real, esto equivaldría a decir que un objeto "C" es, al mismo tiempo, un "A" y un "B". Por ejemplo, una clase `CocheAnfibio` podría heredar de la clase `VehiculoTerrestre` y de la clase `VehiculoMaritimo`, obteniendo las propiedades de ambas jerarquías en una sola definición.
-
-A pesar de su aparente utilidad, la herencia múltiple introduce un problema crítico conocido como el **"Problema del Diamante"** (*Diamond Problem*). Este conflicto ocurre cuando dos superclases tienen un método con el mismo nombre pero con implementaciones distintas, y la subclase hereda de ambas. En ese escenario, el compilador no puede determinar de forma ambigua qué versión del método debe ejecutar el objeto hijo, lo que suele generar errores complejos de memoria y ambigüedades en la estructura de los objetos.
+La **herencia múltiple** es una característica de algunos lenguajes de programación (como C++ o Python) que permite que una clase derivada herede atributos y comportamientos de **más de una clase base** simultáneamente. Basicamente, la herencia múltiple es heredar de más de una clase. En el mundo real, esto equivaldría a decir que un objeto "C" es, al mismo tiempo, un "A" y un "B". Por ejemplo, una clase `CocheAnfibio` podría heredar de la clase `VehiculoTerrestre` y de la clase `VehiculoMaritimo`, obteniendo las propiedades de ambas jerarquías en una sola definición.
 
 
+En **Java, no existe la herencia múltiple de clases**. Los diseñadores del lenguaje decidieron omitirla deliberadamente para priorizar la simplicidad y la robustez del código. También para evitar problemas como la herencia en diamante explicada más adelante. En Java, una clase solo puede tener **un único padre** directo (herencia simple). Esto elimina de raíz los conflictos de ambigüedad y asegura que la jerarquía de objetos sea siempre un árbol claro y predecible, facilitando enormemente la depuración y el mantenimiento del software a gran escala.
 
-En **Java, no existe la herencia múltiple de clases**. Los diseñadores del lenguaje decidieron omitirla deliberadamente para priorizar la simplicidad y la robustez del código. En Java, una clase solo puede tener **un único padre** directo (herencia simple). Esto elimina de raíz los conflictos de ambigüedad y asegura que la jerarquía de objetos sea siempre un árbol claro y predecible, facilitando enormemente la depuración y el mantenimiento del software a gran escala.
+A pesar de su aparente utilidad, la herencia múltiple introduce un problema crítico conocido como el **"Problema del Diamante"** (*Diamond Problem*). Este conflicto ocurre cuando dos superclases tienen un método con el mismo nombre pero con implementaciones distintas, y la subclase hereda de ambas. En ese escenario, el compilador no puede determinar de forma ambigua qué versión del método debe ejecutar el objeto hijo, lo que suele generar errores complejos de memoria y ambigüedades en la estructura de los objetos
 
 Para suplir la necesidad de que un objeto cumpla con varios roles o contratos distintos, Java utiliza las **Interfaces**. Una clase en Java puede implementar múltiples interfaces, lo que le permite garantizar que posee ciertos comportamientos (como ser "Dibujable", "Serializable" o "Comparable") sin heredar la implementación interna de múltiples padres. De esta forma, Java consigue la flexibilidad de la herencia múltiple (un objeto puede ser tratado como varios tipos diferentes) sin heredar los problemas estructurales y de colisión de nombres que esta conlleva.
 
@@ -311,12 +310,12 @@ A continuación se presenta la implementación de la excepción personalizada so
 public class UsuarioNoEncontradoException extends RuntimeException {
     
     // Composición: la excepción contiene al usuario problemático
-    private final Usuario usuario;
+    private final Usuario usuarioNoEncontrado;
 
     // Constructor estándar
-    public UsuarioNoEncontradoException(String mensaje, Usuario usuario) {
-        super(mensaje);
-        this.usuario = usuario;
+    public UsuarioNoEncontradoException(String mensaje,Throwable causa, Usuario usuarioNoEncontrado) {
+        super(mensaje, causa);
+        this.usuarioNoEncontrado = usuarioNoEncontrado;
     }
 
     // Constructor sobrecargado para permitir incluir la causa (recursividad)
@@ -325,8 +324,8 @@ public class UsuarioNoEncontradoException extends RuntimeException {
         this.usuario = usuario;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuario getUsuarioNoEncontrado() {
+        return usuarioNoEncontrado;
     }
 }
 ```
@@ -377,6 +376,11 @@ Un ejemplo clásico ocurre cuando una superclase tiene un método `añadir()` y 
 
 Por esta razón, la herencia debe usarse con extrema cautela. Mientras que la **composición** respeta la encapsulación al tratar al otro objeto como una entidad externa e independiente que solo se comunica mediante mensajes públicos, la herencia funde ambas clases en una sola unidad de memoria. Esta unión hace que cualquier vulnerabilidad o decisión de diseño errónea en el ancestro se propague inevitablemente a toda su descendencia, dificultando la evolución del software a largo plazo.
 
+
+CONCLUSIÓN 10,11,12 --> No usar herencia solo por reutilizar código. Debe usarse cuando se necesita la compatibilidad de tipos.
+Usar herencia implica un fuerte acoplamiento desde la clase derivada hacia la clase base. Es decir, la clase derivada depende mucho de la base.
+Cambios internos en la CLASE BASE podrían llegar a afectar a las clases derivadas.
+Primero pienso en una composición , luego en interfaces... Y como última opción pienso en herencia.
 
 ## 13. Pongamos un ejemplo de dos alternativas para lo mismo. Tenemos un `Estudiante` y un `Trabajador`, ambos tienen datos en común: el DNI y el nombre. Modelemos esto de dos formas: uno por herencia, con una superclase `Persona`, y otro con composición, con una clase `DatosPersonales`. Se debe recibir una instancia de `DatosPersonales` en el constructor de la clase `Estudiante` y `Trabajador`.
 
