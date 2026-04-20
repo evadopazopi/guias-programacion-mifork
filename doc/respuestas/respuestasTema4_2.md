@@ -72,18 +72,18 @@ class Zapador extends Soldado {
 
 // Ejemplo de uso y compatibilidad de tipos
 public class Main {
+    private static void pasarResvita (Soldado[]soldados){
+        for(Soldado soldado : soldados){
+            soldado.saludar;
+        }
+    }
     public static void main(String[] args) {
-        // Array de tipo general que acepta cualquier subtipo
-        Soldado[] peloton = new Soldado[3];
-        
+ 
         peloton[0] = new Artillero("Ramiro", 5);
         peloton[1] = new Zapador("Lucía", 10);
         peloton[2] = new Soldado("Genérico");
 
-        // Recorrido polimórfico
-        for (Soldado s : peloton) {
-            s.saludar(); // Todos saben saludar por herencia
-        }
+       pasarRevista(soldadosVarios);
     }
 }
 ```
@@ -119,8 +119,6 @@ class Artillero extends Soldado {
 Cuando se crea una instancia de una subclase en memoria, como un objeto de tipo `Artillero`, este contiene **todos los atributos** definidos en su jerarquía de herencia. Esto significa que el atributo privado `nombre` de la clase `Soldado` ocupa un espacio físico dentro del objeto `Artillero` en la memoria RAM. Desde el punto de vista de la estructura de datos, el objeto hijo es una extensión del padre y, por lo tanto, "lleva consigo" toda la carga de estado que el padre definió, independientemente de los modificadores de acceso aplicados.
 
 Sin embargo, que un atributo **forme parte** del objeto en memoria no implica que sea **accesible** directamente desde el código de la subclase. La encapsulación sigue vigente: el modificador `private` restringe la visibilidad del atributo estrictamente a los métodos de la clase donde fue declarado. Por tanto, un programador que escriba código dentro de la clase `Artillero` no podrá hacer algo como `this.nombre = "Ramiro";`, ya que el compilador de Java protegerá la privacidad de la superclase y lanzará un error de acceso.
-
-
 
 Para que la subclase pueda interactuar con ese estado privado que posee en su interior, debe recurrir a la **interfaz pública o protegida** que el padre haya proporcionado. En nuestro ejemplo, el `Artillero` inicializa su nombre a través del constructor `super(nombre)` y, si necesitara consultarlo para una operación específica de artillería, debería hacerlo mediante un método *getter* público definido en `Soldado`. Este diseño asegura que, aunque el hijo herede la estructura, el padre mantenga el control total sobre cómo se manipulan sus datos sensibles.
 
@@ -198,7 +196,7 @@ public class MainCast {
         for (Soldado s : peloton) {
             s.saludar(); // Método común (accesible para todos)
 
-            // Comprobación de tipo real para acceder a lo específico
+            // Comprobación de tipo real para acceder a lo específico instaceof --> qué almacena en tiempo de compilacion mi variable de tipo Artillero
             if (s instanceof Artillero) {
                 // Downcasting seguro tras la comprobación
                 Artillero a = (Artillero) s; 
